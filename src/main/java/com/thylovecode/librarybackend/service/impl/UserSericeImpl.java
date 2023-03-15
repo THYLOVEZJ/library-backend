@@ -1,5 +1,8 @@
 package com.thylovecode.librarybackend.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.thylovecode.librarybackend.controller.request.UserPageRequest;
 import com.thylovecode.librarybackend.entity.User;
 import com.thylovecode.librarybackend.mapper.UserMapper;
 import com.thylovecode.librarybackend.service.UserService;
@@ -21,5 +24,13 @@ public class UserSericeImpl implements UserService {
     @Override
     public List<User> listUser() {
         return userMapper.listUser();
+    }
+
+    @Override
+    public Object page(UserPageRequest userPageRequest) {
+        PageHelper.startPage(userPageRequest.getPageNum(), userPageRequest.getPageSize());
+        List<User> users = userMapper.listByCondition(userPageRequest);
+        PageInfo<User> userPageInfo = new PageInfo<>(users);
+        return userPageInfo;
     }
 }

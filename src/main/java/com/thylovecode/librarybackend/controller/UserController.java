@@ -1,5 +1,7 @@
 package com.thylovecode.librarybackend.controller;
 
+import com.thylovecode.librarybackend.common.Result;
+import com.thylovecode.librarybackend.controller.request.UserPageRequest;
 import com.thylovecode.librarybackend.entity.User;
 import com.thylovecode.librarybackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,14 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/all")
-    public List<User> listUsers() {
-        return userService.listUser();
+    public Result listUsers() {
+        List<User> users = userService.listUser();
+        return Result.success(users);
+    }
+
+    @GetMapping("/page")
+    public Result Page(UserPageRequest userPageRequest) {
+        Object page = userService.page(userPageRequest);
+        return Result.success(page);
     }
 }

@@ -1,5 +1,6 @@
 package com.thylovecode.librarybackend.mapper;
 
+import com.thylovecode.librarybackend.controller.request.UserPageRequest;
 import com.thylovecode.librarybackend.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -16,4 +17,6 @@ import java.util.List;
 public interface UserMapper {
 //    @Select("select * from user")
     List<User> listUser();
+
+    List<User> listByCondition(UserPageRequest userPageRequest);
 }
