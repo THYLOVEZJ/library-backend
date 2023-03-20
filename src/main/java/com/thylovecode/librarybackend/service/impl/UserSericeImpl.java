@@ -33,4 +33,25 @@ public class UserSericeImpl implements UserService {
         PageInfo<User> userPageInfo = new PageInfo<>(users);
         return userPageInfo;
     }
+
+    @Override
+    public void save(User user) {
+        userMapper.save(user);
+    }
+
+    @Override
+    public User getById(Integer id) {
+        User user = userMapper.getById(id);
+        return user;
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        userMapper.delete(id);
+    }
 }

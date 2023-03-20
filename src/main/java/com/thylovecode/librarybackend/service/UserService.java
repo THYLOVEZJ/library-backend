@@ -18,4 +18,12 @@ public interface UserService {
 
 
     Object page(UserPageRequest userPageRequest);
+
+    void save(User user);
+
+    User getById(Integer id);
+
+    void updateUser(User user);
+
+    void delete(Integer id);
 }
