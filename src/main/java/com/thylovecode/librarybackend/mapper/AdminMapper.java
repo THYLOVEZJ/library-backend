@@ -1,6 +1,7 @@
 package com.thylovecode.librarybackend.mapper;
 
 import com.thylovecode.librarybackend.controller.request.BaseRequest;
+import com.thylovecode.librarybackend.controller.request.LoginRequest;
 import com.thylovecode.librarybackend.controller.request.UserPageRequest;
 import com.thylovecode.librarybackend.entity.Admin;
 import com.thylovecode.librarybackend.entity.User;
@@ -28,4 +29,8 @@ public interface AdminMapper {
     void updateAdmin(Admin admin);
 
     void delete(Integer id);
+
+    Admin getByUsernameAndPassword(LoginRequest loginRequest);
+
+    Admin getByUsername(String username);
 }

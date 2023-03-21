@@ -1,7 +1,9 @@
 package com.thylovecode.librarybackend.controller;
 
 import com.thylovecode.librarybackend.common.Result;
+import com.thylovecode.librarybackend.controller.dto.LoginDTO;
 import com.thylovecode.librarybackend.controller.request.AdminPageRequest;
+import com.thylovecode.librarybackend.controller.request.LoginRequest;
 import com.thylovecode.librarybackend.controller.request.UserPageRequest;
 import com.thylovecode.librarybackend.entity.Admin;
 import com.thylovecode.librarybackend.service.AdminService;
@@ -23,6 +25,12 @@ import java.util.List;
 public class AdminController {
     @Autowired
     AdminService adminService;
+
+    @PostMapping("/login")
+    public Result login(@RequestBody LoginRequest loginRequest) {
+        LoginDTO loginDTO = adminService.login(loginRequest);
+        return Result.success(loginDTO);
+    }
 
     @GetMapping("/all")
     public Result listUsers() {

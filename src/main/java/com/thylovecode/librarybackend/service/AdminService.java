@@ -1,6 +1,8 @@
 package com.thylovecode.librarybackend.service;
 
+import com.thylovecode.librarybackend.controller.dto.LoginDTO;
 import com.thylovecode.librarybackend.controller.request.BaseRequest;
+import com.thylovecode.librarybackend.controller.request.LoginRequest;
 import com.thylovecode.librarybackend.controller.request.UserPageRequest;
 import com.thylovecode.librarybackend.entity.Admin;
 import com.thylovecode.librarybackend.entity.User;
@@ -25,4 +27,6 @@ public interface AdminService {
     void updateAdmin(Admin admin);
 
     void delete(Integer id);
+
+    LoginDTO login(LoginRequest loginRequest);
 }
