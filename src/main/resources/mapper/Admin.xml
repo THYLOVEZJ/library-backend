@@ -9,7 +9,7 @@
     </insert>
     <update id="updateAdmin">
         update admin set username = #{username},phone = #{phone},email = #{email},password =
-        #{password}
+        #{password}, state = #{state}
         where id
         = #{id}
     </update>

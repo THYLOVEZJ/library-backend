@@ -14,7 +14,8 @@ public enum MyExceptionEnum {
     USER_NOT_EXIST("10001", "用户不存在"),
     REQUEST_PARAM_ERROR("10002", "参数错误"),
     PASSWORD_ERROR("10003", "密码错误"),
-    UPDATE_FAIL("10004", "修改失败");
+    UPDATE_FAIL("10004", "修改失败"),
+    USER_IS_RESTRICT("10005", "账号被禁用");
 
     String code;
     String msg;

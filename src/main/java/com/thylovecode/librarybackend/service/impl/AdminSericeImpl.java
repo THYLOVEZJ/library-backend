@@ -80,6 +80,9 @@ public class AdminSericeImpl implements AdminService {
         if (admin == null) {
             throw new MyException(MyExceptionEnum.PASSWORD_ERROR);
         }
+        if (!admin.getState()){
+            throw new MyException(MyExceptionEnum.USER_IS_RESTRICT);
+        }
         LoginDTO loginDTO = new LoginDTO();
         BeanUtils.copyProperties(admin, loginDTO);
         loginDTO.setToken(TokenUtils.genToken(String.valueOf(admin.getId()), admin.getPassword()));
@@ -88,12 +91,12 @@ public class AdminSericeImpl implements AdminService {
 
     @Override
     public void changePass(PasswordRequest request) {
-        LoginRequest loginRequest = new LoginRequest(request.getUsername(), encode(request.getPassword()));
+        LoginRequest loginRequest = new LoginRequest(request.getUsername(), request.getPassword());
         Admin admin = adminMapper.getByUsernameAndPassword(loginRequest);
         if (admin == null) {
             throw new MyException(MyExceptionEnum.USER_NOT_EXIST);
         }
-        int i = adminMapper.updatePassword(request.getNewPass(), request.getUsername());
+        int i = adminMapper.updatePassword(encode(request.getNewPass()), request.getUsername());
         if (i <= 0) {
             throw new MyException(MyExceptionEnum.UPDATE_FAIL);
         }
