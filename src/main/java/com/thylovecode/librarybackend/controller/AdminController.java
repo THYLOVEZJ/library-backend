@@ -19,7 +19,6 @@ import java.util.List;
  * @date: 2023年03月14日 22:26
  */
 
-@CrossOrigin
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

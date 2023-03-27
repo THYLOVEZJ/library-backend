@@ -1,5 +1,6 @@
 package com.thylovecode.librarybackend.service.impl;
 
+import cn.hutool.crypto.SecureUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.thylovecode.librarybackend.controller.dto.LoginDTO;
@@ -15,6 +16,8 @@ import com.thylovecode.librarybackend.mapper.AdminMapper;
 import com.thylovecode.librarybackend.mapper.UserMapper;
 import com.thylovecode.librarybackend.service.AdminService;
 import com.thylovecode.librarybackend.service.UserService;
+import com.thylovecode.librarybackend.utils.TokenUtils;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,8 @@ public class AdminSericeImpl implements AdminService {
     @Autowired
     AdminMapper adminMapper;
 
+    private static final String SALT = "123";
+
     @Override
     public List<Admin> listAdmin() {
         return adminMapper.listAdmin();
@@ -46,6 +51,9 @@ public class AdminSericeImpl implements AdminService {
 
     @Override
     public void save(Admin admin) {
+        String password = admin.getPassword();
+        String newPassword = encode(password);
+        admin.setPassword(newPassword);
         adminMapper.save(admin);
     }
 
@@ -67,17 +75,21 @@ public class AdminSericeImpl implements AdminService {
 
     @Override
     public LoginDTO login(LoginRequest loginRequest) {
-        Admin admin = new Admin();
-        admin = adminMapper.getByUsername(loginRequest.getUsername());
-        if (admin == null) {
+        if (adminMapper.getByUsername(loginRequest.getUsername()) == null) {
             throw new MyException(MyExceptionEnum.USER_NOT_EXIST);
         }
-        admin = adminMapper.getByUsernameAndPassword(loginRequest);
+        loginRequest.setPassword(encode(loginRequest.getPassword()));
+        Admin admin = adminMapper.getByUsernameAndPassword(loginRequest);
         if (admin == null) {
             throw new MyException(MyExceptionEnum.PASSWORD_ERROR);
         }
         LoginDTO loginDTO = new LoginDTO();
         BeanUtils.copyProperties(admin, loginDTO);
+        loginDTO.setToken(TokenUtils.genToken(String.valueOf(admin.getId()), admin.getPassword()));
         return loginDTO;
+    }
+
+    private String encode(String password) {
+        return SecureUtil.md5(password + SALT);
     }
 }
