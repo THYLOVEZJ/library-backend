@@ -33,4 +33,6 @@ public interface AdminMapper {
     Admin getByUsernameAndPassword(LoginRequest loginRequest);
 
     Admin getByUsername(String username);
+
+    int updatePassword(String newPass, String username);
 }

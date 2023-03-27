@@ -4,6 +4,7 @@ import com.thylovecode.librarybackend.common.Result;
 import com.thylovecode.librarybackend.controller.dto.LoginDTO;
 import com.thylovecode.librarybackend.controller.request.AdminPageRequest;
 import com.thylovecode.librarybackend.controller.request.LoginRequest;
+import com.thylovecode.librarybackend.controller.request.PasswordRequest;
 import com.thylovecode.librarybackend.controller.request.UserPageRequest;
 import com.thylovecode.librarybackend.entity.Admin;
 import com.thylovecode.librarybackend.service.AdminService;
@@ -65,6 +66,12 @@ public class AdminController {
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         adminService.delete(id);
+        return Result.success();
+    }
+
+    @PutMapping("/password")
+    public Result password(@RequestBody PasswordRequest request){
+        adminService.changePass(request);
         return Result.success();
     }
 }

@@ -13,6 +13,9 @@
         where id
         = #{id}
     </update>
+    <update id="updatePassword">
+        update admin set password = #{newPass} where username = #{username}
+    </update>
     <delete id="delete">
         delete from admin where id = #{id}
     </delete>

@@ -1,18 +1,15 @@
 package com.thylovecode.librarybackend.controller.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @Description:
  * @author: thy
- * @date: 2023年03月21日 11:39
+ * @date: 2023年03月27日 12:56
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class LoginRequest {
+public class PasswordRequest {
     private String username;
     private String password;
+    private String newPass;
 }

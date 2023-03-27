@@ -3,10 +3,7 @@ package com.thylovecode.librarybackend.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.thylovecode.librarybackend.controller.dto.LoginDTO;
-import com.thylovecode.librarybackend.controller.request.AdminPageRequest;
-import com.thylovecode.librarybackend.controller.request.BaseRequest;
-import com.thylovecode.librarybackend.controller.request.LoginRequest;
-import com.thylovecode.librarybackend.controller.request.UserPageRequest;
+import com.thylovecode.librarybackend.controller.request.*;
 import com.thylovecode.librarybackend.entity.Admin;
 import com.thylovecode.librarybackend.entity.User;
 import com.thylovecode.librarybackend.exception.MyException;
@@ -79,5 +76,18 @@ public class AdminSericeImpl implements AdminService {
         LoginDTO loginDTO = new LoginDTO();
         BeanUtils.copyProperties(admin, loginDTO);
         return loginDTO;
+    }
+
+    @Override
+    public void changePass(PasswordRequest request) {
+        LoginRequest loginRequest = new LoginRequest(request.getUsername(), request.getPassword());
+        Admin admin = adminMapper.getByUsernameAndPassword(loginRequest);
+        if (admin == null) {
+            throw new MyException(MyExceptionEnum.USER_NOT_EXIST);
+        }
+        int i = adminMapper.updatePassword(request.getNewPass(), request.getUsername());
+        if (i <= 0) {
+            throw new MyException(MyExceptionEnum.UPDATE_FAIL);
+        }
     }
 }
