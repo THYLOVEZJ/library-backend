@@ -15,7 +15,8 @@ public enum MyExceptionEnum {
     REQUEST_PARAM_ERROR("10002", "参数错误"),
     PASSWORD_ERROR("10003", "密码错误"),
     UPDATE_FAIL("10004", "修改失败"),
-    USER_IS_RESTRICT("10005", "账号被禁用");
+    USER_IS_RESTRICT("10005", "账号被禁用"),
+    USER_NAME_DUPLICATE("10006", "用户名重复");
 
     String code;
     String msg;

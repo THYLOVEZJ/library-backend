@@ -48,6 +48,11 @@ public class AdminSericeImpl implements AdminService {
 
     @Override
     public void save(Admin admin) {
+        String username = admin.getUsername();
+        Admin admin1 = adminMapper.getByUsername(username);
+        if (admin1!=null){
+            throw new MyException(MyExceptionEnum.USER_NAME_DUPLICATE);
+        }
         String password = admin.getPassword();
         String newPassword = encode(password);
         admin.setPassword(newPassword);
