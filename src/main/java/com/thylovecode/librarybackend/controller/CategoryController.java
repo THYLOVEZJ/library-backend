@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Description:
@@ -57,5 +58,13 @@ public class CategoryController {
     public Result delete(@PathVariable Integer id) {
         categoryService.delete(id);
         return Result.success();
+    }
+
+    @GetMapping("/tree")
+    public Result tree(CategoryPageRequest pageRequest) {
+        List<Category> categories = categoryService.listCategory();
+        List<Category> treeList = categories.stream().filter(v -> v.getPid() == null).collect(Collectors.toList());
+        List<Category> res = categoryService.makeTree(treeList);
+        return Result.success(res);
     }
 }

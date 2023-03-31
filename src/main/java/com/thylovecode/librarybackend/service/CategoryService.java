@@ -1,7 +1,6 @@
 package com.thylovecode.librarybackend.service;
 
 import com.github.pagehelper.PageInfo;
-import com.thylovecode.librarybackend.controller.request.BaseRequest;
 import com.thylovecode.librarybackend.controller.request.CategoryPageRequest;
 import com.thylovecode.librarybackend.entity.Category;
 
@@ -20,4 +19,6 @@ public interface CategoryService {
     void updateCategory(Category category);
 
     void delete(Integer id);
+
+    List<Category> makeTree(List<Category> treeList);
 }

@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -60,4 +60,21 @@ public class CategoryServiceImpl implements CategoryService {
     public void delete(Integer id) {
         categoryMapper.delete(id);
     }
+
+    @Override
+    public List<Category> makeTree(List<Category> treeList) {
+        List<Category> list = categoryMapper.list();
+        for (Category e : treeList) {
+            for (Category category : list) {
+                if (category.getPid() == e.getId()) {
+                    if (e.getChildren() == null) {
+                        e.setChildren(new ArrayList<>());
+                    }
+                    e.getChildren().add(category);
+                }
+            }
+        }
+        return treeList;
+    }
+
 }
